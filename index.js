@@ -1,11 +1,15 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+const cookieSession = require('cookie-session')
+const passport = require('passport')
 require('colors')
 
 const authRoutes = require('./routes/authRoutes')
 const routes = require('./routes/routes')
+const keys = require('./config/keys')
 require('./models/userSchema')
+require('./services/passport')
 
 mongoose.connect('mongodb://localhost/pop-cart-dev', {
   useNewUrlParser: true,
@@ -14,8 +18,16 @@ mongoose.connect('mongodb://localhost/pop-cart-dev', {
 })
 
 const app = express()
+
+app.use(cookieSession({
+  maxAge: 30 * 24 * 60 * 60 * 1000,
+  keys: [keys.cookieKey]
+}))
+app.use(passport.initialize())
+app.use(passport.session())
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
+
 routes(app)
 authRoutes(app)
 
