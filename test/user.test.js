@@ -7,11 +7,11 @@ const utils = require('./utils')
 const User = mongoose.model('users')
 
 describe('Users --', () => {
-  let joe, jen, thing1, thing2
+  let joe
   beforeEach((done) => {
     utils.createMockData()
       .then((results) => {
-        [ joe, jen, thing1, thing2 ] = results
+        [ joe, ...rest ] = results
         done()
       })
   })
