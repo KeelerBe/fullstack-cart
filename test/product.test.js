@@ -25,6 +25,15 @@ describe('Products--', () => {
       })
   })
 
+  it('GET request to /api/products fetches all products', (done) => {
+    request(app)
+      .get('/api/products')
+      .end((err, res) => {
+        assert(res.body.length === 2)
+        done()
+      })
+  })
+
   it('POST request to /api/products creates a new product', (done) => {
     const thing3 = new Product({
       productName: 'Thing 3',
@@ -39,7 +48,6 @@ describe('Products--', () => {
       .end(() => {
         Product.find({})
           .then((products) => {
-            console.log(products)
             assert(products.length === 3)
             done()
           })

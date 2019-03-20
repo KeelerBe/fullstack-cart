@@ -8,6 +8,12 @@ module.exports = {
     res.send({ success: true })
   },
 
+  fetchAllProducts(req, res, next) {
+    Product.find({})
+      .then((products) => res.send(products))
+      .catch(next)
+  },
+
   createProduct(req, res, next) {
     const productProps = req.body
 

@@ -11,5 +11,6 @@ module.exports = (app) => {
   app.delete('/api/users/:id', users.deleteUser)
 
   app.get('/api/products/test', products.test)
+  app.get('/api/products', products.fetchAllProducts)
   app.post('/api/products', products.createProduct)
 }
