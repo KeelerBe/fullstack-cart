@@ -11,11 +11,13 @@ const keys = require('./config/keys')
 require('./models/userSchema')
 require('./services/passport')
 
-mongoose.connect('mongodb://localhost/pop-cart-dev', {
-  useNewUrlParser: true,
-  useFindAndModify: false,
-  useCreateIndex: true
-})
+if (process.env.NODE_ENV !== 'test') {
+  mongoose.connect('mongodb://localhost/pop-cart-dev', {
+    useNewUrlParser: true,
+    useFindAndModify: false,
+    useCreateIndex: true
+  })
+}
 
 const app = express()
 
