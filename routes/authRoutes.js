@@ -9,4 +9,11 @@ module.exports = (app) => {
     (req, res) => {
       res.redirect('/')
     })
+  
+  app.get('/logout', (req, res) => {
+    const user = req.user.givenName
+
+    req.logout()
+    res.send({ goodbye: user })
+  })
 }
