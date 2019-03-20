@@ -25,12 +25,34 @@ describe('Users --', () => {
       })
   })
 
+  it('POST request to /api/users creates a new user', (done) => {
+    const bob = new User({
+      givenName: 'Bob',
+      familyName: 'Dude',
+      email: 'bob@email.com'
+    })
+    
+    bob.save()
+      .then((user) => {
+        request(app)
+          .post('/api/users')
+          .send(user)
+          .end(() => {
+            User.find({})
+              .then((users) => {
+                assert(users.length === 3)
+                done()
+              })
+          })
+      })
+  })
+
   it('fetches a specific user for a given id', (done) => {
     request(app)
       .get(`/api/users/${joe._id}`)
       .end((err, res) => {
         const { cartProducts, inventoryProducts, givenName } = res.body
-        
+
         assert(cartProducts[0].productName === 'Thing 2')
         assert(inventoryProducts[0].productName === 'Thing 1')
         assert(givenName === 'Joe')

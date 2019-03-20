@@ -8,6 +8,13 @@ module.exports = {
     res.send({ success: true })
   },
 
+  createUser(req, res, next) {
+    const userProps = req.body
+    new User(userProps).save()
+      .then((user) => res.send(user))
+      .catch(next)
+  },
+
   fetchUser(req, res, next) {
     const userId = req.params.id
 
