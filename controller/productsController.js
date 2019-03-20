@@ -10,6 +10,7 @@ module.exports = {
 
   fetchAllProducts(req, res, next) {
     Product.find({})
+      .populate('user')
       .then((products) => res.send(products))
       .catch(next)
   },
@@ -18,6 +19,32 @@ module.exports = {
     const productProps = req.body
 
     new Product(productProps).save()
+      .then((product) => res.send(product))
+      .catch(next)
+  },
+
+  fetchProduct(req, res, next) {
+    const productId = req.params.id
+
+    Product.findById(productId)
+      .populate('user')
+      .then((product) => res.send(product))
+      .catch(next)
+  },
+
+  updateProduct(req, res, next) {
+    const productId = req.params.id
+    const productProps = req.body
+
+    Product.findByIdAndUpdate(productId, productProps)
+      .then((product) => res.send(product))
+      .catch(next)
+  },
+
+  deleteProduct(req, res, next) {
+    const productId = req.params.id
+
+    Product.findByIdAndDelete(productId)
       .then((product) => res.send(product))
       .catch(next)
   }

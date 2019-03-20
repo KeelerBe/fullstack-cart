@@ -13,4 +13,7 @@ module.exports = (app) => {
   app.get('/api/products/test', products.test)
   app.get('/api/products', products.fetchAllProducts)
   app.post('/api/products', products.createProduct)
+  app.get('/api/products/:id', products.fetchProduct)
+  app.put('/api/products/:id', products.updateProduct)
+  app.delete('/api/products/:id', products.deleteProduct)
 }

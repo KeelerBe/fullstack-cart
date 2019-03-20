@@ -25,7 +25,7 @@ describe('Users--', () => {
       })
   })
 
-  it('POST request to /api/users creates a new user', (done) => {
+  it('creates a new user', (done) => {
     const bob = new User({
       givenName: 'Bob',
       familyName: 'Dude',
@@ -57,7 +57,7 @@ describe('Users--', () => {
       })
   })
 
-  it('PUT request to /api/users updates an existing user', (done) => {
+  it('updates an existing user for a given id', (done) => {
     request(app)
       .put(`/api/users/${joe._id}`)
       .send({ familyName: 'Cooler' })
@@ -70,13 +70,13 @@ describe('Users--', () => {
       })
   })
 
-  it('DELETE request to /api/users deletes an existing user', (done) => {
+  it('deletes an existing user for a given id', (done) => {
     request(app)
       .delete(`/api/users/${joe._id}`)
       .end((err, res) => {
-        User.find({})
-          .then((users) => {
-            assert(users.length === 1)
+        User.findById(joe._id)
+          .then((user) => {
+            assert(user === null)
             done()
           })
       })

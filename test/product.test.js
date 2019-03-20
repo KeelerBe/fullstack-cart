@@ -25,7 +25,7 @@ describe('Products--', () => {
       })
   })
 
-  it('GET request to /api/products fetches all products', (done) => {
+  it('fetches all products', (done) => {
     request(app)
       .get('/api/products')
       .end((err, res) => {
@@ -34,7 +34,7 @@ describe('Products--', () => {
       })
   })
 
-  it('POST request to /api/products creates a new product', (done) => {
+  it('creates a new product', (done) => {
     const thing3 = new Product({
       productName: 'Thing 3',
       price: 2500,
@@ -49,6 +49,41 @@ describe('Products--', () => {
         Product.find({})
           .then((products) => {
             assert(products.length === 3)
+            done()
+          })
+      })
+  })
+
+  it('fetches a specific product for a given id', (done) => {
+    request(app)
+      .get(`/api/products/${thing1._id}`)
+      .end((err, res) => {
+        assert(res.body.productName === 'Thing 1')
+        assert(res.body.user.givenName === 'Joe')
+        done()
+      })
+  })
+
+  it('updates an existing product for a given id', (done) => {
+    request(app)
+      .put(`/api/products/${thing1._id}`)
+      .send({ available: 150 })
+      .end(() => {
+        Product.findById(thing1._id)
+          .then((product) => {
+            assert(product.available === 150)
+            done()
+          })
+      })
+  })
+
+  it('deletes a product for a given id', (done) => {
+    request(app)
+      .delete(`/api/products/${thing1._id}`)
+      .end(() => {
+        Product.findById(thing1._id)
+          .then((product) => {
+            assert(product === null)
             done()
           })
       })
