@@ -8,7 +8,7 @@ require('colors')
 const authRoutes = require('./routes/authRoutes')
 const routes = require('./routes/routes')
 const keys = require('./config/keys')
-require('./models/userSchema')
+// require('./models/userSchema')
 require('./models/productSchema')
 require('./services/passport')
 
@@ -33,6 +33,10 @@ app.use(passport.session())
 
 routes(app)
 authRoutes(app)
+
+app.use((err, req, res) => {
+  app.status(422).send({ error: err.message })
+})
 
 const PORT = process.env.PORT || 5000
 app.listen(PORT, () => 
