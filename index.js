@@ -8,8 +8,6 @@ require('colors')
 const authRoutes = require('./routes/authRoutes')
 const routes = require('./routes/routes')
 const keys = require('./config/keys')
-// require('./models/userSchema')
-require('./models/productSchema')
 require('./services/passport')
 
 if (process.env.NODE_ENV !== 'test') {
