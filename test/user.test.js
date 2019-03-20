@@ -6,12 +6,12 @@ const utils = require('./utils')
 
 const User = mongoose.model('users')
 
-describe('Users --', () => {
+describe('Users--', () => {
   let joe
   beforeEach((done) => {
     utils.createMockData()
       .then((results) => {
-        [ joe, ...rest ] = results
+        [ joe,,, ] = results
         done()
       })
   })
@@ -32,17 +32,14 @@ describe('Users --', () => {
       email: 'bob@email.com'
     })
     
-    bob.save()
-      .then((user) => {
-        request(app)
-          .post('/api/users')
-          .send(user)
-          .end(() => {
-            User.find({})
-              .then((users) => {
-                assert(users.length === 3)
-                done()
-              })
+    request(app)
+      .post('/api/users')
+      .send(bob)
+      .end(() => {
+        User.find({})
+          .then((users) => {
+            assert(users.length === 3)
+            done()
           })
       })
   })
