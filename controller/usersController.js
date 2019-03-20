@@ -22,5 +22,22 @@ module.exports = {
       .populate([{ path: 'cartProducts' }, { path: 'inventoryProducts' }])
       .then((user) => res.send(user))
       .catch(next)
+  },
+
+  updateUser(req, res, next) {
+    const userId = req.params.id
+    const userProps = req.body
+
+    User.findByIdAndUpdate(userId, userProps)
+      .then((user) => res.send(user))
+      .catch(next)
+  },
+
+  deleteUser(req, res, next) {
+    const userId = req.params.id
+
+    User.findByIdAndDelete(userId)
+      .then((user) => res.send(user))
+      .catch(next)
   }
 }

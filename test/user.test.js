@@ -59,4 +59,29 @@ describe('Users --', () => {
         done()
       })
   })
+
+  it('PUT request to /api/users updates an existing user', (done) => {
+    request(app)
+      .put(`/api/users/${joe._id}`)
+      .send({ familyName: 'Cooler' })
+      .end(() => {
+        User.findById(joe._id)
+          .then((user) => {
+            assert(user.familyName === 'Cooler')
+            done()
+          })
+      })
+  })
+
+  it('DELETE request to /api/users deletes an existing user', (done) => {
+    request(app)
+      .delete(`/api/users/${joe._id}`)
+      .end((err, res) => {
+        User.find({})
+          .then((users) => {
+            assert(users.length === 1)
+            done()
+          })
+      })
+  })
 })
