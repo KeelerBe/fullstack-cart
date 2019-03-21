@@ -24,7 +24,7 @@ module.exports = {
   },
 
   fetchProduct(req, res, next) {
-    const productId = req.params.id
+    const productId = req.params.productId
 
     Product.findById(productId)
       .populate('user')
@@ -33,7 +33,7 @@ module.exports = {
   },
 
   updateProduct(req, res, next) {
-    const productId = req.params.id
+    const productId = req.params.productId
     const productProps = req.body
 
     Product.findByIdAndUpdate(productId, productProps)
@@ -42,7 +42,7 @@ module.exports = {
   },
 
   deleteProduct(req, res, next) {
-    const productId = req.params.id
+    const productId = req.params.productId
 
     Product.findByIdAndDelete(productId)
       .then((product) => res.send(product))

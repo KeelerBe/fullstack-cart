@@ -18,7 +18,7 @@ describe('Users--', () => {
 
   it('handles GET request to /api/users/test', (done) => {
     request(app)
-      .get('/api/users/test')
+      .get('/users/test')
       .end((err, res) => {
         assert(res.body.success)
         done()
@@ -33,7 +33,7 @@ describe('Users--', () => {
     })
     
     request(app)
-      .post('/api/users')
+      .post('/users')
       .send(bob)
       .end(() => {
         User.find({})
@@ -46,7 +46,7 @@ describe('Users--', () => {
 
   it('fetches a specific user for a given id', (done) => {
     request(app)
-      .get(`/api/users/${joe._id}`)
+      .get(`/users/${joe._id}`)
       .end((err, res) => {
         const { cartProducts, inventoryProducts, givenName } = res.body
 
@@ -59,7 +59,7 @@ describe('Users--', () => {
 
   it('updates an existing user for a given id', (done) => {
     request(app)
-      .put(`/api/users/${joe._id}`)
+      .put(`/users/${joe._id}`)
       .send({ familyName: 'Cooler' })
       .end(() => {
         User.findById(joe._id)
@@ -72,7 +72,7 @@ describe('Users--', () => {
 
   it('deletes an existing user for a given id', (done) => {
     request(app)
-      .delete(`/api/users/${joe._id}`)
+      .delete(`/users/${joe._id}`)
       .end((err, res) => {
         User.findById(joe._id)
           .then((user) => {

@@ -16,7 +16,7 @@ module.exports = {
   },
 
   fetchUser(req, res, next) {
-    const userId = req.params.id
+    const userId = req.params.userId
 
     User.findById(userId)
       .populate([{ path: 'cartProducts' }, { path: 'inventoryProducts' }])
@@ -25,7 +25,7 @@ module.exports = {
   },
 
   updateUser(req, res, next) {
-    const userId = req.params.id
+    const userId = req.params.userId
     const userProps = req.body
 
     User.findByIdAndUpdate(userId, userProps)
@@ -34,7 +34,7 @@ module.exports = {
   },
 
   deleteUser(req, res, next) {
-    const userId = req.params.id
+    const userId = req.params.userId
 
     User.findByIdAndDelete(userId)
       .then((user) => res.send(user))

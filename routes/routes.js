@@ -1,19 +1,26 @@
 const users = require('../controller/usersController')
 const products = require('../controller/productsController')
+const cart = require('../controller/cartController')
 
 module.exports = (app) => {
   app.get('/', (req, res) => res.send({ app: 'pop-cart' }))
 
-  app.get('/api/users/test', users.test)
-  app.post('/api/users', users.createUser)
-  app.get('/api/users/:id', users.fetchUser)
-  app.put('/api/users/:id', users.updateUser)
-  app.delete('/api/users/:id', users.deleteUser)
+  app.get('/users/test', users.test)
+  app.post('/users', users.createUser)
+  app.get('/users/:userId', users.fetchUser)
+  app.put('/users/:userId', users.updateUser)
+  app.delete('/users/:userId', users.deleteUser)
 
-  app.get('/api/products/test', products.test)
-  app.get('/api/products', products.fetchAllProducts)
-  app.post('/api/products', products.createProduct)
-  app.get('/api/products/:id', products.fetchProduct)
-  app.put('/api/products/:id', products.updateProduct)
-  app.delete('/api/products/:id', products.deleteProduct)
+  app.get('/products/test', products.test)
+  app.get('/products', products.fetchAllProducts)
+  app.post('/products', products.createProduct)
+  app.get('/products/:productId', products.fetchProduct)
+  app.put('/products/:productId', products.updateProduct)
+  app.delete('/products/:productId', products.deleteProduct)
+
+  app.get('/cart/test', cart.test)
+  app.get('/users/:userId/cart', cart.fetchCart)
+  app.post('/users/:userId/cart/products/:productId', cart.addToCart)
+  app.put('/users/:userId/cart/products/:productId', cart.updateQuantity)
+  app.delete('/users/:userId/cart/products/:productId', cart.removeFromCart)
 }
