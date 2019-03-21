@@ -58,8 +58,29 @@ describe('Cart--', () => {
               })
           })
       })
+  })
 
+  it('increments quantity for a given product id', (done) => {
+    request(app)
+      .put(`/users/${joe._id}/cart/products/${thing2._id}/increment`)
+      .end(() => {
+        User.findById(joe._id)
+          .then((user) => {
+            assert(user.cartProductById[thing2._id.toString()] === 3)
+            done()
+          })
+      })
+  })
 
-    
+  it('decrements quantity for a given product id', (done) => {
+    request(app)
+      .put(`/users/${joe._id}/cart/products/${thing2._id}/decrement`)
+      .end(() => {
+        User.findById(joe._id)
+          .then((user) => {
+            assert(user.cartProductById[thing2._id.toString()] === 1)
+            done()
+          })
+      })
   })
 })

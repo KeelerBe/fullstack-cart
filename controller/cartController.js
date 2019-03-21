@@ -31,15 +31,41 @@ module.exports = {
       .then((results) => {
         const [ product, user ] = results
         user.cartProducts.push(product)
-        user.cartProductById[product._id.toString()] = 1
+        user.cartProductById[productId] = 1
         user.markModified('cartProductById')
-        // user.cartProductById.something = 1
         return user.save()
       })
       .then(() => res.send({ message: 'Product added to cart.' }))
       .catch(next)
   },
 
-  updateQuantity(req, res, next) {},
+  incrementQuantity(req, res, next) {
+    const userId = req.params.userId
+    const productId = req.params.productId
+
+    User.findById(userId)
+      .then((user) => {
+        user.cartProductById[productId] += 1
+        user.markModified('cartProductById')
+        return user.save()
+      })
+      .then((user) => res.send({ message: 'Product quantity incremented.' }))
+      .catch(next)
+  },
+
+  decrementQuantity(req, res, next) {
+    const userId = req.params.userId
+    const productId = req.params.productId
+
+    User.findById(userId)
+      .then((user) => {
+        user.cartProductById[productId] -= 1
+        user.markModified('cartProductById')
+        return user.save()
+      })
+      .then((user) => res.send({ message: 'Product quantity decremented.' }))
+      .catch(next)
+  },
+
   removeFromCart(req, res, next) {}
 }
