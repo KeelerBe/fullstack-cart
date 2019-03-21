@@ -11,7 +11,15 @@ module.exports = {
   addToCart(req, res, next) {},
 
   fetchCart(req, res, next) {
-    const userId = req.params.id
+    const userId = req.params.userId
+
+    User.findById(userId)
+      .populate('cartProducts')
+      .then((user) => {
+        const { cartProducts, cartProductById } = user
+        res.send({ cartProducts, cartProductById })
+      })
+      .catch(next)
   },
 
   updateQuantity(req, res, next) {},
