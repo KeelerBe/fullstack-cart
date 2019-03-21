@@ -13,10 +13,7 @@ module.exports = {
 
     User.findById(userId)
       .populate('cartProducts')
-      .then((user) => {
-        const { cartProducts, cartProductById } = user
-        res.send({ cartProducts, cartProductById })
-      })
+      .then((user) => res.send(user))
       .catch(next)
   },
 

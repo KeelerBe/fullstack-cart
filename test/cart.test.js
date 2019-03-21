@@ -26,14 +26,14 @@ describe('Cart--', () => {
       })
   })
 
-  it('fetches a cart for a given user id', (done) => {
+  it.only('fetches a cart for a given user id', (done) => {
     request(app)
       .get(`/users/${joe._id}/cart`)
       .end((err, res) => {
-        const { cartProducts, cartProductById } = res.body
-
+        const { cartProducts, cartProductById, cartCount } = res.body
         assert(cartProducts[0].productName === 'Thing 2')
         assert(cartProductById[thing2._id] === 2)
+        assert(cartCount === 2)
         done()
       })
   })

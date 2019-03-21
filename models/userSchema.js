@@ -20,4 +20,13 @@ const User = new Schema({
   }]
 }, { minimize: false })
 
+User.set('toObject', { virtuals: true })
+User.set('toJSON', { virtuals: true })
+
 module.exports = mongoose.model('users', User)
+
+User.virtual('cartCount').get(function () {
+  return Object.values(this.cartProductById).reduce((total, productCount) => {
+    return total += productCount
+  }, 0)
+})
