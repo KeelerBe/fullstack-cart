@@ -67,5 +67,18 @@ module.exports = {
       .catch(next)
   },
 
-  removeFromCart(req, res, next) {}
+  removeFromCart(req, res, next) {
+    const userId = req.params.userId
+    const productId = req.params.productId
+
+    User.findById(userId)
+      .then((user) => {
+        user.cartProducts.pull(productId)
+        delete user.cartProductById[productId]
+        user.markModified('cartProductById')
+        return user.save()
+      })
+      .then((user) => res.send(user))
+      .catch(next)
+  }
 }

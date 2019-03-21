@@ -38,7 +38,7 @@ describe('Cart--', () => {
       })
   })
 
-  it('adds a product to the current user\'s cart', (done) => {
+  it('adds a product on to the current user\'s cart', (done) => {
     const thing3 = new Product({
       productName: 'Thing 3',
       price: 3000,
@@ -79,6 +79,19 @@ describe('Cart--', () => {
         User.findById(joe._id)
           .then((user) => {
             assert(user.cartProductById[thing2._id.toString()] === 1)
+            done()
+          })
+      })
+  })
+
+  it('removes a product from the current user\'s cart', (done) => {
+    request(app)
+      .delete(`/users/${joe._id}/cart/products/${thing2._id}`)
+      .end((err, res) => {
+        User.findById(joe._id)
+          .then((user) => {
+            assert(user.cartProducts.length === 0)
+            assert(Object.keys(user.cartProductById).length === 0)
             done()
           })
       })
