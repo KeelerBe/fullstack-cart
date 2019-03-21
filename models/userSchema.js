@@ -30,3 +30,10 @@ User.virtual('cartCount').get(function () {
     return total += productCount
   }, 0)
 })
+
+User.virtual('cartTotal').get(function () {
+  return this.cartProducts.reduce((total, product) => {
+    const productCount = this.cartProductById[product._id.toString()]
+    return total += product.price * productCount
+  }, 0)
+})

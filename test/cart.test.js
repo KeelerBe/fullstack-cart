@@ -26,26 +26,28 @@ describe('Cart--', () => {
       })
   })
 
-  it.only('fetches a cart for a given user id', (done) => {
+  it('fetches a cart for a given user id', (done) => {
     request(app)
       .get(`/users/${joe._id}/cart`)
       .end((err, res) => {
-        const { cartProducts, cartProductById, cartCount } = res.body
+        const { cartProducts, cartProductById, cartCount, cartTotal } = res.body
+        
         assert(cartProducts[0].productName === 'Thing 2')
         assert(cartProductById[thing2._id] === 2)
         assert(cartCount === 2)
+        assert(cartTotal === 10000)
         done()
       })
   })
 
   it('adds a product on to the current user\'s cart', (done) => {
-    const thing3 = new Product({
+    const newProduct = new Product({
       productName: 'Thing 3',
       price: 3000,
       available: 2
     })
 
-    thing3.save()
+    newProduct.save()
       .then((product) => {
         request(app)
           .post(`/users/${joe._id}/cart/products/${product._id}`)
