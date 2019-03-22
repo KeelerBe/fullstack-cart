@@ -22,4 +22,14 @@ describe('Inventory--', () => {
         done()
       })
   })
+
+  it('fetches inventory for a given user id', (done) => {
+    request(app)
+      .get(`/users/${joe._id}/inventory`)
+      .end((err, res) => {
+        assert(res.body.length === 1)
+        assert(res.body[0].productName === 'Thing 1')
+        done()
+      })
+  })
 })

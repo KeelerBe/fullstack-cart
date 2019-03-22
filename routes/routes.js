@@ -1,5 +1,5 @@
 const users = require('../controller/usersController')
-const products = require('../controller/productsController')
+const store = require('../controller/storeController')
 const cart = require('../controller/cartController')
 const inventory = require('../controller/inventoryController')
 
@@ -12,12 +12,9 @@ module.exports = (app) => {
   app.put('/users/:userId', users.updateUser)
   app.delete('/users/:userId', users.deleteUser)
 
-  app.get('/products/test', products.test)
-  app.get('/products', products.fetchAllProducts)
-  app.post('/products', products.createProduct)
-  app.get('/products/:productId', products.fetchProduct)
-  app.put('/products/:productId', products.updateProduct)
-  app.delete('/products/:productId', products.deleteProduct)
+  app.get('/store/test', store.test)
+  app.get('/store/products', store.fetchAllProducts)
+  app.get('/store/products/:productId', store.fetchProduct)
 
   app.get('/cart/test', cart.test)
   app.get('/users/:userId/cart', cart.fetchCart)
@@ -27,4 +24,8 @@ module.exports = (app) => {
   app.delete('/users/:userId/cart/products/:productId', cart.removeFromCart)
 
   app.get('/inventory/test', inventory.test)
+  app.get('/users/:userId/inventory', inventory.fetchInventory)
+  // app.post('/products', store.createProduct)
+  // app.put('/products/:productId', store.updateProduct)
+  // app.delete('/products/:productId', store.deleteProduct)
 }
