@@ -54,4 +54,29 @@ describe('Inventory--', () => {
           })
       })
   })
+
+  it('updates an existing product for a given id', (done) => {
+    request(app)
+      .put(`/inventory/products/${thing1._id}`)
+      .send({ available: 250 })
+      .end(() => {
+        Product.findById(thing1._id)
+          .then((product) => {
+            assert(product.available === 250)
+            done()
+          })
+      })
+  })
+
+  it('deletes a product for a given id', (done) => {
+    request(app)
+      .delete(`/inventory/products/${thing1._id}`)
+      .end(() => {
+        Product.findById(thing1._id)
+          .then((product) => {
+            assert(product === null)
+            done()
+          })
+      })
+  })
 })

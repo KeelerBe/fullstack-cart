@@ -37,18 +37,19 @@ module.exports = {
   updateProduct(req, res, next) {
     const productId = req.params.productId
     const productProps = req.body
+    const userId = req.params.userId
 
     Product.findByIdAndUpdate(productId, productProps)
       .then((product) => res.send(product))
       .catch(next)
   },
 
-  // deleteProduct(req, res, next) {
-  //   const productId = req.params.productId
+  deleteProduct(req, res, next) {
+    const productId = req.params.productId
 
-  //   Product.findByIdAndDelete(productId)
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // }
+    Product.findByIdAndDelete(productId)
+      .then((product) => res.send(product))
+      .catch(next)
+  }
 }
 

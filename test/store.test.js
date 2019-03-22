@@ -66,29 +66,4 @@ describe('Products--', () => {
         done()
       })
   })
-
-  // it('updates an existing product for a given id', (done) => {
-  //   request(app)
-  //     .put(`/products/${thing1._id}`)
-  //     .send({ available: 150 })
-  //     .end(() => {
-  //       Product.findById(thing1._id)
-  //         .then((product) => {
-  //           assert(product.available === 150)
-  //           done()
-  //         })
-  //     })
-  // })
-
-  // it('deletes a product for a given id', (done) => {
-  //   request(app)
-  //     .delete(`/products/${thing1._id}`)
-  //     .end(() => {
-  //       Product.findById(thing1._id)
-  //         .then((product) => {
-  //           assert(product === null)
-  //           done()
-  //         })
-  //     })
-  // })
 })
