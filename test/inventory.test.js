@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const app = require('../index')
 const utils = require('./utils')
 
+const Product = mongoose.model('products')
+
 describe('Inventory--', () => {
   let joe, thing1
   beforeEach((done) => {
@@ -30,6 +32,26 @@ describe('Inventory--', () => {
         assert(res.body.length === 1)
         assert(res.body[0].productName === 'Thing 1')
         done()
+      })
+  })
+
+  it('creates a new product for the current user', (done) => {
+    const newProduct = {
+      productName: 'Thingumajig',
+      price: 4500,
+      available: 7
+    }
+    request(app)
+      .post(`/users/${joe._id}/inventory/products`)
+      .send(newProduct)
+      .end(() => {
+        Product.find({})
+          .then((products) => {
+            assert(products.length === 3)
+            assert(products.find(({ productName }) => 
+              productName === 'Thingumajig'))
+            done()
+          })
       })
   })
 })

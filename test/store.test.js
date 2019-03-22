@@ -57,26 +57,6 @@ describe('Products--', () => {
       })
   })
 
-  // it('creates a new product', (done) => {
-  //   const thing3 = new Product({
-  //     productName: 'Thing 3',
-  //     price: 2500,
-  //     available: 70,
-  //     user: joe
-  //   })
-
-  //   request(app)
-  //     .post('/products')
-  //     .send(thing3)
-  //     .end(() => {
-  //       Product.find({})
-  //         .then((products) => {
-  //           assert(products.length === 3)
-  //           done()
-  //         })
-  //     })
-  // })
-
   it('fetches a specific product for a given id', (done) => {
     request(app)
       .get(`/store/products/${thing1._id}`)

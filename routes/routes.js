@@ -25,7 +25,7 @@ module.exports = (app) => {
 
   app.get('/inventory/test', inventory.test)
   app.get('/users/:userId/inventory', inventory.fetchInventory)
-  // app.post('/products', store.createProduct)
+  app.post('/users/:userId/inventory/products', inventory.createProduct)
   // app.put('/products/:productId', store.updateProduct)
   // app.delete('/products/:productId', store.deleteProduct)
 }

@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 
 const User = mongoose.model('users')
+const Product = mongoose.model('products')
 
 module.exports = {
   test(req, res) {
@@ -14,24 +15,33 @@ module.exports = {
       .populate('inventoryProducts')
       .then((user) => res.send(user.inventoryProducts))
       .catch(next)
-  }
+  },
 
-  // createProduct(req, res, next) {
-  //   const productProps = req.body
+  createProduct(req, res, next) {
+    const userId = req.params.userId
+    const productProps = req.body
 
-  //   new Product(productProps).save()
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // },
+    Promise.all([
+      new Product(productProps).save(),
+      User.findById(userId)
+    ])
+      .then((results) => {
+        const [ product, user ] = results
+        product.user = user
+        return product.save()
+      })
+      .then((product) => res.send(product))
+      .catch(next)
+  },
 
-  // updateProduct(req, res, next) {
-  //   const productId = req.params.productId
-  //   const productProps = req.body
+  updateProduct(req, res, next) {
+    const productId = req.params.productId
+    const productProps = req.body
 
-  //   Product.findByIdAndUpdate(productId, productProps)
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // },
+    Product.findByIdAndUpdate(productId, productProps)
+      .then((product) => res.send(product))
+      .catch(next)
+  },
 
   // deleteProduct(req, res, next) {
   //   const productId = req.params.productId
