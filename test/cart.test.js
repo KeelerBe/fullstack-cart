@@ -40,28 +40,6 @@ describe('Cart--', () => {
       })
   })
 
-  it('adds a product on to the current user\'s cart', (done) => {
-    const newProduct = new Product({
-      productName: 'Thing 3',
-      price: 3000,
-      available: 2
-    })
-
-    newProduct.save()
-      .then((product) => {
-        request(app)
-          .post(`/users/${joe._id}/cart/products/${product._id}`)
-          .end((err, res) => {
-            User.findById(joe._id)
-              .then((user) => {
-                assert(user.cartProducts.length === 2)
-                assert(user.cartProductById[product._id] === 1)
-                done()
-              })
-          })
-      })
-  })
-
   it('increments quantity for a given product id', (done) => {
     request(app)
       .put(`/users/${joe._id}/cart/products/${thing2._id}/increment`)

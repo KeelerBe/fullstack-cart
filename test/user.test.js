@@ -48,11 +48,11 @@ describe('Users--', () => {
     request(app)
       .get(`/users/${joe._id}`)
       .end((err, res) => {
-        const { cartProducts, inventoryProducts, givenName } = res.body
+        const { givenName, cartProducts, inventoryProducts } = res.body
 
+        assert(givenName === 'Joe')
         assert(cartProducts[0].productName === 'Thing 2')
         assert(inventoryProducts[0].productName === 'Thing 1')
-        assert(givenName === 'Joe')
         done()
       })
   })

@@ -17,25 +17,6 @@ module.exports = {
       .catch(next)
   },
 
-  addToCart(req, res, next) {
-    const userId = req.params.userId
-    const productId = req.params.productId
-
-    Promise.all([
-      Product.findById(productId),
-      User.findById(userId)
-    ])
-      .then((results) => {
-        const [ product, user ] = results
-        user.cartProducts.push(product)
-        user.cartProductById[productId] = 1
-        user.markModified('cartProductById')
-        return user.save()
-      })
-      .then(() => res.send({ message: 'Product added to cart.' }))
-      .catch(next)
-  },
-
   incrementQuantity(req, res, next) {
     const userId = req.params.userId
     const productId = req.params.productId
@@ -75,7 +56,7 @@ module.exports = {
         user.markModified('cartProductById')
         return user.save()
       })
-      .then((user) => res.send(user))
+      .then((user) => res.send({ message: 'Product removed from cart.' }))
       .catch(next)
   }
 }

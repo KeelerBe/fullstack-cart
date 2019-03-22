@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 require('../models/productSchema')
 
+const User = mongoose.model('users')
 const Product = mongoose.model('products')
 
 module.exports = {
@@ -15,13 +16,26 @@ module.exports = {
       .catch(next)
   },
 
-  // createProduct(req, res, next) {
-  //   const productProps = req.body
+  addToCart(req, res, next) {
+    const userId = req.params.userId
+    const productId = req.params.productId
 
-  //   new Product(productProps).save()
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // },
+    Promise.all([
+      Product.findById(productId),
+      User.findById(userId)
+    ])
+      .then((results) => {
+        const [ product, user ] = results
+
+        user.cartProducts.push(product)
+        user.cartProductById[productId] = 1
+        user.markModified('cartProductById')
+
+        return user.save()
+      })
+      .then(() => res.send({ message: 'Product added to cart.' }))
+      .catch(next)
+  },
 
   fetchProduct(req, res, next) {
     const productId = req.params.productId
@@ -30,22 +44,5 @@ module.exports = {
       .populate('user')
       .then((product) => res.send(product))
       .catch(next)
-  },
-
-  // updateProduct(req, res, next) {
-  //   const productId = req.params.productId
-  //   const productProps = req.body
-
-  //   Product.findByIdAndUpdate(productId, productProps)
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // },
-
-  // deleteProduct(req, res, next) {
-  //   const productId = req.params.productId
-
-  //   Product.findByIdAndDelete(productId)
-  //     .then((product) => res.send(product))
-  //     .catch(next)
-  // }
+  }
 }

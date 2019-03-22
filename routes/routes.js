@@ -15,10 +15,10 @@ module.exports = (app) => {
   app.get('/store/test', store.test)
   app.get('/store/products', store.fetchAllProducts)
   app.get('/store/products/:productId', store.fetchProduct)
+  app.post('/store/users/:userId/cart/products/:productId', store.addToCart)   
 
   app.get('/cart/test', cart.test)
   app.get('/users/:userId/cart', cart.fetchCart)
-  app.post('/users/:userId/cart/products/:productId', cart.addToCart)
   app.put('/users/:userId/cart/products/:productId/increment', cart.incrementQuantity)
   app.put('/users/:userId/cart/products/:productId/decrement', cart.decrementQuantity)
   app.delete('/users/:userId/cart/products/:productId', cart.removeFromCart)
