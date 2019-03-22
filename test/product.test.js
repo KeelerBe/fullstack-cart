@@ -10,8 +10,8 @@ describe('Products--', () => {
   let joe, thing1
   beforeEach((done) => {
     utils.createMockData()
-      .then((results) => {
-        [ joe,, thing1, ] = results
+      .then((data) => {
+        [ joe,, thing1, ] = data
         done()
       })
   })

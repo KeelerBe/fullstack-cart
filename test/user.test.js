@@ -10,8 +10,8 @@ describe('Users--', () => {
   let joe
   beforeEach((done) => {
     utils.createMockData()
-      .then((results) => {
-        [ joe,,, ] = results
+      .then((data) => {
+        [ joe,,, ] = data
         done()
       })
   })

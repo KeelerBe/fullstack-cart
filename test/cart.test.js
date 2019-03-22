@@ -11,8 +11,8 @@ describe('Cart--', () => {
   let joe, thing2
   beforeEach((done) => {
     utils.createMockData()
-      .then((results) => {
-        [ joe,,, thing2 ] = results
+      .then((data) => {
+        [ joe,,, thing2 ] = data
         done()
       })
   })

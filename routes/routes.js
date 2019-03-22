@@ -1,6 +1,7 @@
 const users = require('../controller/usersController')
 const products = require('../controller/productsController')
 const cart = require('../controller/cartController')
+const inventory = require('../controller/inventoryController')
 
 module.exports = (app) => {
   app.get('/', (req, res) => res.send({ app: 'pop-cart' }))
@@ -24,4 +25,6 @@ module.exports = (app) => {
   app.put('/users/:userId/cart/products/:productId/increment', cart.incrementQuantity)
   app.put('/users/:userId/cart/products/:productId/decrement', cart.decrementQuantity)
   app.delete('/users/:userId/cart/products/:productId', cart.removeFromCart)
+
+  app.get('/inventory/test', inventory.test)
 }
