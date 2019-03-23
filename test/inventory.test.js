@@ -27,7 +27,7 @@ describe('Inventory--', () => {
 
   it('fetches inventory for a given user id', (done) => {
     request(app)
-      .get(`/users/${joe._id}/inventory`)
+      .get(`/inventory/users/${joe._id}`)
       .end((err, res) => {
         assert(res.body.length === 1)
         assert(res.body[0].productName === 'Thing 1')
@@ -42,7 +42,7 @@ describe('Inventory--', () => {
       available: 7
     }
     request(app)
-      .post(`/users/${joe._id}/inventory/products`)
+      .post(`/inventory/users/${joe._id}/products`)
       .send(newProduct)
       .end(() => {
         Product.find({})

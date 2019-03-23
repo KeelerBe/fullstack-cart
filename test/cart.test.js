@@ -28,7 +28,7 @@ describe('Cart--', () => {
 
   it('fetches a cart for a given user id', (done) => {
     request(app)
-      .get(`/users/${joe._id}/cart`)
+      .get(`/cart/users/${joe._id}`)
       .end((err, res) => {
         const { cartProducts, cartProductById, cartCount, cartTotal } = res.body
         
@@ -42,7 +42,7 @@ describe('Cart--', () => {
 
   it('increments quantity for a given product id', (done) => {
     request(app)
-      .put(`/users/${joe._id}/cart/products/${thing2._id}/increment`)
+      .put(`/cart/users/${joe._id}/products/${thing2._id}/increment`)
       .end(() => {
         User.findById(joe._id)
           .then((user) => {
@@ -54,7 +54,7 @@ describe('Cart--', () => {
 
   it('decrements quantity for a given product id', (done) => {
     request(app)
-      .put(`/users/${joe._id}/cart/products/${thing2._id}/decrement`)
+      .put(`/cart/users/${joe._id}/products/${thing2._id}/decrement`)
       .end(() => {
         User.findById(joe._id)
           .then((user) => {
@@ -66,7 +66,7 @@ describe('Cart--', () => {
 
   it('removes a product from the current user\'s cart', (done) => {
     request(app)
-      .delete(`/users/${joe._id}/cart/products/${thing2._id}`)
+      .delete(`/cart/users/${joe._id}/products/${thing2._id}`)
       .end((err, res) => {
         User.findById(joe._id)
           .then((user) => {

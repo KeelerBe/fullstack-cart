@@ -45,7 +45,7 @@ describe('Products--', () => {
     newProduct.save()
       .then((product) => {
         request(app)
-          .post(`/store/users/${joe._id}/cart/products/${product._id}`)
+          .post(`/store/users/${joe._id}/products/${product._id}`)
           .end((err, res) => {
             User.findById(joe._id)
               .then((user) => {
