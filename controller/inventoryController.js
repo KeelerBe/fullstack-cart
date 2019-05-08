@@ -37,7 +37,7 @@ module.exports = {
   updateProduct(req, res, next) {
     const productId = req.params.productId
     const productProps = req.body
-    const userId = req.params.userId
+    // const userId = req.params.userId
 
     Product.findByIdAndUpdate(productId, productProps)
       .then((product) => res.send(product))
