@@ -20,20 +20,20 @@ if (process.env.NODE_ENV !== 'test') {
 
 const app = express()
 
-app.use(bodyParser.json())
-app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieSession({
   maxAge: 30 * 24 * 60 * 60 * 1000,
   keys: [keys.cookieKey]
 }))
 app.use(passport.initialize())
 app.use(passport.session())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
 routes(app)
 authRoutes(app)
 
-app.use((err, req, res) => {
-  app.status(422).send({ error: err.message })
+app.use((err, req, res, next) => {
+  res.status(422).send({ error: err.message })
 })
 
 const PORT = process.env.PORT || 5000
