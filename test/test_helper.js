@@ -9,7 +9,7 @@ before((done) => {
 
   mongoose.connection
     .once('open', () => done())
-    .on('error', () => console.log('Error: ', error))
+    .on('error', (error) => console.log('Error: ', error))
 })
 
 beforeEach((done) => {
