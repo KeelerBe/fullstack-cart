@@ -1,5 +1,5 @@
 # RESTful Shopping Cart
-This project test the endpoints of a RESTful shopping cart API
+This project tests the endpoints of a RESTful shopping cart API
 
 ```javascript
   app.get('/users/test', users.test)
